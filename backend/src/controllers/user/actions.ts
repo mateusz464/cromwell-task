@@ -60,6 +60,7 @@ export async function userLogin(email: string, password: string, res: Response) 
 }
 
 export async function getTheUser(token: string, res: Response) {
+  // Uses decoded JWT information to get user
   const decoded = decodeJWT(token);
   if (!decoded) {
     if (!res.headersSent) {

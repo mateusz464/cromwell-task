@@ -4,8 +4,10 @@ import isJWTUser from "./isJWTUser";
 
 export default function decodeJWT(token: string): JWTUser | null {
   try {
+    // Decode token
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
 
+    // Return user if valid
     if (isJWTUser(decoded)) {
       return decoded;
     } else {

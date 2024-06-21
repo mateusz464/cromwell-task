@@ -41,3 +41,28 @@ export async function createTheUser(name: string, email: string, password: strin
 
   return response;
 }
+
+export async function userLogin(email: string, password: string, res: Response) {
+  const user = await getUserByEmail(email);
+
+  if (!user) {
+    if (!res.headersSent) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+    return;
+  }
+
+  // Check if password matches
+  const hashedPassword = user.password;
+  const validPassword = await bcrypt.compare(password, hashedPassword);
+
+  if (validPassword) {
+    return user;
+  } else {
+    if (!res.headersSent) {
+      res.status(401).json({ message: "Invalid credentials" });
+      return;
+    }
+  }
+}

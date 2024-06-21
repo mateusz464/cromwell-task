@@ -41,6 +41,6 @@ export async function login(req: Request, res: Response) {
   const response = await userLogin(email, password, res);
 
   if (response) {
-    return res.status(200).json("Login successful");
+    return res.status(200).json(response);
   }
 }

@@ -1,6 +1,7 @@
-import { Response } from "express";
+import {Response} from "express";
 import bcrypt from "bcryptjs";
-import { createUser, getUserByEmail } from "./queries";
+import jwt from "jsonwebtoken";
+import {createUser, getUserByEmail} from "./queries";
 
 export async function getTheUserByEmail(email: string, res: Response) {
   const user = await getUserByEmail(email);
@@ -58,7 +59,10 @@ export async function userLogin(email: string, password: string, res: Response) 
   const validPassword = await bcrypt.compare(password, hashedPassword);
 
   if (validPassword) {
-    return user;
+    // Create and assign token
+    return jwt.sign({id: user._id, email: user.email}, process.env.JWT_SECRET!, {
+      expiresIn: "24h",
+    });
   } else {
     if (!res.headersSent) {
       res.status(401).json({ message: "Invalid credentials" });

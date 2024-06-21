@@ -1,7 +1,7 @@
-import {NextFunction, Request, Response} from "express";
-import jwt, {JwtPayload} from "jsonwebtoken";
+import {NextFunction, Response} from "express";
+import jwt from "jsonwebtoken";
 import CustomRequest from "../interfaces/CustomRequest";
-import JWTUser from "../interfaces/JWTUser";
+import isJWTUser from "../utils/isJWTUser";
 
 export default function verifyToken(req: CustomRequest, res: Response, next: NextFunction) {
   // Check if token is provided
@@ -33,9 +33,4 @@ export default function verifyToken(req: CustomRequest, res: Response, next: Nex
       return res.sendStatus(403);
     }
   });
-}
-
-// Check if user is of type JWTUser
-function isJWTUser(user: string | JwtPayload | undefined): user is JWTUser {
-  return (user as JWTUser).id !== undefined;
 }

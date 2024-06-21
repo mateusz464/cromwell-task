@@ -2,13 +2,13 @@ import express from "express";
 const router = express.Router();
 
 // Import endpoints
-import {getUserByEmail, createUser, login} from "../controllers/user/endpoints";
+import {createUser, login, getUser} from "../controllers/user/endpoints";
 import verifyToken from "../middleware/verifyToken";
 
 // Routes
 router
-  .route("/:id")
-  .get(verifyToken, getUserByEmail);
+  .route("/")
+  .get(verifyToken, getUser)
 
 router
   .route("/login")

@@ -1,19 +1,5 @@
 import {Request, Response} from "express";
-import {createTheUser, getTheUserByEmail, userLogin} from "./actions";
-
-export async function getUserByEmail(req: Request, res: Response) {
-  const { id } = req.params;
-
-  if (!id) {
-    if (!res.headersSent) {
-      res.status(400).json({ message: "User's email is not provided" });
-    }
-  }
-
-  const response = await getTheUserByEmail(id, res);
-
-  return res.status(200).json(response);
-}
+import {createTheUser, getTheUser, userLogin} from "./actions";
 
 export async function createUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
@@ -43,4 +29,18 @@ export async function login(req: Request, res: Response) {
   if (response) {
     return res.status(200).json(response);
   }
+}
+
+export async function getUser(req: Request, res: Response) {
+  const authHeader = req.headers["authorization"];
+  if (typeof authHeader !== "string") {
+    return res.sendStatus(403);
+  }
+
+  const bearer = authHeader.split(" ");
+  const token = bearer[1];
+
+  const response = await getTheUser(token, res);
+
+  return res.status(200).json(response);
 }

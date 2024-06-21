@@ -2,19 +2,7 @@ import {Response} from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {createUser, getUserByEmail} from "./queries";
-
-export async function getTheUserByEmail(email: string, res: Response) {
-  const user = await getUserByEmail(email);
-
-  if (!user) {
-    if (!res.headersSent) {
-      res.status(404).json({ message: "User not found" });
-      return;
-    }
-  }
-
-  return user;
-}
+import decodeJWT from "../../utils/decodeJWT";
 
 export async function createTheUser(name: string, email: string, password: string, res: Response) {
   // Check if user already exists
@@ -69,4 +57,25 @@ export async function userLogin(email: string, password: string, res: Response) 
       return;
     }
   }
+}
+
+export async function getTheUser(token: string, res: Response) {
+  const decoded = decodeJWT(token);
+  if (!decoded) {
+    if (!res.headersSent) {
+      res.status(401).json({ message: "Invalid token" });
+      return;
+    }
+    return;
+  }
+
+  const user = await getUserByEmail(decoded.email);
+  if (!user) {
+    if (!res.headersSent) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+  }
+
+  return user;
 }

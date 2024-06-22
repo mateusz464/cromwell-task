@@ -9,6 +9,8 @@ function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -29,8 +31,15 @@ function Register() {
   };
 
   function validateEmail() {
+    // Email validation regex
     const regex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i;
     return regex.test(email);
+  }
+
+  function validatePassword() {
+    // Password validation regex
+    const regex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+    return regex.test(password);
   }
 
   return (
@@ -87,6 +96,20 @@ function Register() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          onBlur={() => {
+            if (password.trim() !== "") {
+              const isValid = validatePassword();
+              if (!isValid) {
+                setPasswordError(
+                  "Password must be at least 8 characters long and contain at least 1 number and 1 special character",
+                );
+              } else {
+                setPasswordError("");
+              }
+            }
+          }}
+          helperText={passwordError}
+          error={!!passwordError}
         />
         <TextField
           variant="outlined"
@@ -100,6 +123,17 @@ function Register() {
           autoComplete="current-password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
+          onBlur={() => {
+            if (confirmPassword.trim() !== "") {
+              if (password !== confirmPassword) {
+                setConfirmPasswordError("Passwords do not match");
+              } else {
+                setConfirmPasswordError("");
+              }
+            }
+          }}
+          helperText={confirmPasswordError}
+          error={!!confirmPasswordError}
         />
         <Button type="submit" fullWidth variant="contained" color="primary">
           Register

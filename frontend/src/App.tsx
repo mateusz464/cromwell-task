@@ -1,6 +1,8 @@
 import "./App.css";
 import Register from "./sections/Register.tsx";
 import { createTheme, ThemeProvider } from "@mui/material";
+import { Provider } from "react-redux";
+import store from "./redux/store.ts";
 
 const darkTheme = createTheme({
   palette: {
@@ -10,11 +12,13 @@ const darkTheme = createTheme({
 
 function App() {
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div className="App">
-        <Register />
-      </div>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={darkTheme}>
+        <div className="App">
+          <Register />
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 }
 

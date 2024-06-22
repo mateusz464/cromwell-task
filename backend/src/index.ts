@@ -4,15 +4,10 @@ import session from "express-session";
 import cors from "cors";
 import http from "http";
 import { connect } from "./config/mongo";
-import {BASE_API_URL, PORT} from "./config/config";
+import { PORT } from "./config/config";
 
 // Load routes
 import user from "./routes/users";
-
-// CORS options
-const corsOptions = {
-  origin: ["*", `${BASE_API_URL}:${PORT}`],
-};
 
 // Connect to MongoDB
 void connect();
@@ -32,9 +27,9 @@ app.use(
       secure: isCookie,
       maxAge: 86400,
     },
-  })
+  }),
 );
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Mount routes
 app.use("/api/user", user);

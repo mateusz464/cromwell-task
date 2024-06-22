@@ -1,10 +1,15 @@
-import {Response} from "express";
+import { Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import {createUser, getUserByEmail} from "./queries";
+import { createUser, getUserByEmail } from "./queries";
 import decodeJWT from "../../utils/decodeJWT";
 
-export async function createTheUser(name: string, email: string, password: string, res: Response) {
+export async function createTheUser(
+  name: string,
+  email: string,
+  password: string,
+  res: Response,
+) {
   // Check if user already exists
   const user = await getUserByEmail(email);
   if (user) {
@@ -16,7 +21,7 @@ export async function createTheUser(name: string, email: string, password: strin
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt)
+  const hashedPassword = await bcrypt.hash(password, salt);
 
   // Create user
   const response = await createUser(name, email, hashedPassword);
@@ -26,12 +31,27 @@ export async function createTheUser(name: string, email: string, password: strin
       res.status(500).json({ message: "Failed to create user" });
       return;
     }
+    return;
   }
 
-  return response;
+  const token = jwt.sign(
+    { id: response._id, email: response.email },
+    process.env.JWT_SECRET!,
+    {
+      expiresIn: "24h",
+    },
+  );
+
+  return {
+    jwt: token,
+  };
 }
 
-export async function userLogin(email: string, password: string, res: Response) {
+export async function userLogin(
+  email: string,
+  password: string,
+  res: Response,
+) {
   const user = await getUserByEmail(email);
 
   if (!user) {
@@ -48,9 +68,17 @@ export async function userLogin(email: string, password: string, res: Response) 
 
   if (validPassword) {
     // Create and assign token
-    return jwt.sign({id: user._id, email: user.email}, process.env.JWT_SECRET!, {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET!,
+      {
+        expiresIn: "24h",
+      },
+    );
+
+    return {
+      jwt: token,
+    };
   } else {
     if (!res.headersSent) {
       res.status(401).json({ message: "Invalid credentials" });

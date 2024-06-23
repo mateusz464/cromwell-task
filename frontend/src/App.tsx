@@ -5,6 +5,7 @@ import store from "./redux/store.ts";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./sections/Register.tsx";
 import Login from "./sections/Login.tsx";
+import NavigationPage from "./pages/NavigationPage.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -18,8 +19,22 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <BrowserRouter>
           <Routes>
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
+            <Route
+              path="/register"
+              element={
+                <NavigationPage>
+                  <Register />
+                </NavigationPage>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <NavigationPage>
+                  <Login />
+                </NavigationPage>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>

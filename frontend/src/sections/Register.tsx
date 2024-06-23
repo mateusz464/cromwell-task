@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Button, Container, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { CromwellAPI } from "../auth/cromwellAPI.ts";
+import { AxiosError } from "axios";
+import ResponseData from "../intefaces/ResponseData.ts";
 
 function Register() {
   const [name, setName] = useState("");
@@ -14,19 +16,31 @@ function Register() {
   const dispatch = useDispatch();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    // Prevent the default form submission
     event.preventDefault();
 
-    const response = await CromwellAPI.post("/user/register", {
-      name: name,
-      email: email,
-      password: password,
-    });
+    try {
+      // Register user with the API
+      const response = await CromwellAPI.post("/user/register", {
+        name: name,
+        email: email,
+        password: password,
+      });
 
-    if (response.status === 201) {
-      dispatch({ type: "LOGIN", payload: response.data.jwt });
-      alert("Registered!");
-    } else {
-      console.error("Registration Failed!");
+      if (response.status === 201) {
+        // Update Redux state with JWT token
+        dispatch({ type: "LOGIN", payload: response.data.jwt });
+        alert("Registered!");
+      } else {
+        console.error("Registration Failed!");
+      }
+    } catch (err) {
+      const axiosError = err as AxiosError;
+      if (axiosError.response) {
+        const responseData = axiosError.response.data as ResponseData;
+        console.error(responseData.message);
+        alert(responseData.message);
+      }
     }
   };
 

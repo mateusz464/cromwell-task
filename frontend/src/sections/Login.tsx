@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { Button, Container, TextField, Typography } from "@mui/material";
+import { Button, Container, Link, TextField, Typography } from "@mui/material";
 import { CromwellAPI } from "../auth/cromwellAPI.ts";
 import { AxiosError } from "axios";
 import ResponseData from "../intefaces/ResponseData.ts";
@@ -68,11 +68,15 @@ function Login() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          sx={{ marginBottom: "20px" }}
         />
         <Button type="submit" fullWidth variant="contained" color="primary">
           Login
         </Button>
       </form>
+      <Typography variant="body2" align="center" marginTop="10px">
+        Don't have an account? <Link href="/register">Register here</Link>.
+      </Typography>
     </Container>
   );
 }

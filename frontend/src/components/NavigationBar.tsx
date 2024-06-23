@@ -151,9 +151,14 @@ function NavigationBar() {
                 </IconButton>
               </Tooltip>
             ) : (
-              <Button href="/login" color="inherit">
-                Login
-              </Button>
+              <>
+                <Button href="/login" color="inherit">
+                  Login
+                </Button>
+                <Button href="/register" color="inherit">
+                  Register
+                </Button>
+              </>
             )}
             <Menu
               sx={{ mt: "45px" }}

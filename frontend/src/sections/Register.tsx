@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Container, TextField, Typography } from "@mui/material";
+import { Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { CromwellAPI } from "../auth/cromwellAPI.ts";
 import { AxiosError } from "axios";
@@ -149,11 +149,15 @@ function Register() {
           }}
           helperText={confirmPasswordError}
           error={!!confirmPasswordError}
+          sx={{ marginBottom: "20px" }}
         />
         <Button type="submit" fullWidth variant="contained" color="primary">
           Register
         </Button>
       </form>
+      <Typography variant="body2" align="center" marginTop="10px">
+        Already have an account? <Link href="/login">Sign in</Link>.
+      </Typography>
     </Container>
   );
 }

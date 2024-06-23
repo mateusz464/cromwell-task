@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Register from "./sections/Register.tsx";
 import Login from "./sections/Login.tsx";
 import NavigationPage from "./pages/NavigationPage.tsx";
+import Home from "./sections/Home.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -19,6 +20,14 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <BrowserRouter>
           <Routes>
+            <Route
+              path="/"
+              element={
+                <NavigationPage>
+                  <Home />
+                </NavigationPage>
+              }
+            />
             <Route
               path="/register"
               element={

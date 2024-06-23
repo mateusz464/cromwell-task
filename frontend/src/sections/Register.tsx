@@ -30,6 +30,7 @@ function Register() {
       if (response.status === 201) {
         // Update Redux state with JWT token
         dispatch({ type: "LOGIN", payload: response.data.jwt });
+        // TODO: Redirect to landing page
         alert("Registered!");
       } else {
         console.error("Registration Failed!");

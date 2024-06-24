@@ -11,7 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RootReduxState from "../intefaces/RootState.ts";
 
 const pages = ["Home", "Profile"];
@@ -25,6 +25,12 @@ function NavigationBar() {
     null,
   );
   const user = useSelector((state: RootReduxState) => state.user.user);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+    handleCloseUserMenu();
+  };
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -172,7 +178,12 @@ function NavigationBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={
+                    setting === "Logout" ? handleLogout : handleCloseUserMenu
+                  }
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

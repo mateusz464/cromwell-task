@@ -1,12 +1,14 @@
-import {Request, Response} from "express";
-import {createTheUser, getTheUser, userLogin} from "./actions";
+import { Request, Response } from "express";
+import { createTheUser, getTheUser, userLogin } from "./actions";
 
 export async function createUser(req: Request, res: Response) {
   const { name, email, password } = req.body;
 
   if (!name || !email || !password) {
     if (!res.headersSent) {
-      res.status(400).json({ message: "User's name, email or password is not provided" });
+      res
+        .status(400)
+        .json({ message: "User's name, email or password is not provided" });
     }
   }
 
@@ -20,7 +22,9 @@ export async function login(req: Request, res: Response) {
 
   if (!email || !password) {
     if (!res.headersSent) {
-      res.status(400).json({ message: "User's email or password is not provided" });
+      res
+        .status(400)
+        .json({ message: "User's email or password is not provided" });
     }
   }
 
@@ -34,7 +38,7 @@ export async function login(req: Request, res: Response) {
 export async function getUser(req: Request, res: Response) {
   const authHeader = req.headers["authorization"];
   if (typeof authHeader !== "string") {
-    return res.sendStatus(403);
+    return res.status(403);
   }
 
   const bearer = authHeader.split(" ");

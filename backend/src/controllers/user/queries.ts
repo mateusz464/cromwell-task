@@ -15,7 +15,10 @@ export async function createUser(
   email: string,
   password: string,
 ) {
-  const user = await Users.create({ name, email, password });
+  const user = await Users.create({ name, email, password }).catch((err) => {
+    console.error(err);
+    return null;
+  });
 
   return user ? user : null;
 }

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { CromwellAPI } from "../auth/cromwellAPI.ts";
 import { AxiosError } from "axios";
 import ResponseData from "../interfaces/ResponseData.ts";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [name, setName] = useState("");
@@ -14,6 +15,7 @@ function Register() {
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // Prevent the default form submission
@@ -30,8 +32,8 @@ function Register() {
       if (response.status === 201) {
         // Update Redux state with JWT token
         dispatch({ type: "LOGIN", payload: response.data.jwt });
-        // TODO: Redirect to landing page
-        alert("Registered!");
+        // Redirect to profile page
+        navigate("/profile");
       } else {
         console.error("Registration Failed!");
       }

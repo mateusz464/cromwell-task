@@ -15,6 +15,7 @@ function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const token = useSelector((state: RootReduxState) => state.user.user);
 
+  // Get user data from the API
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -36,9 +37,10 @@ function Profile() {
       }
     };
 
-    getUser();
-  }, []);
+    void getUser();
+  }, [token]);
 
+  // Displays user information or a loading message
   return (
     <div
       style={{

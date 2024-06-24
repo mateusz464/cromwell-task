@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { Button, Container, Link, TextField, Typography } from "@mui/material";
 import { CromwellAPI } from "../auth/cromwellAPI.ts";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 import ResponseData from "../interfaces/ResponseData.ts";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // Prevent the default form submission
@@ -24,7 +26,8 @@ function Login() {
       if (response.status === 200) {
         // Update Redux state with JWT token
         dispatch({ type: "LOGIN", payload: response.data.jwt });
-        alert("Logged in!");
+        // Redirect to profile page
+        navigate("/profile");
       } else {
         console.error("Login Failed!");
       }

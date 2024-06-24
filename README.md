@@ -14,6 +14,7 @@ This is a demo website and API for Cromwell created with Node.js and Express for
   - [Running the Website in Production Mode](#running-the-website-in-production-mode)
 - [API Documentation](#api-documentation)
 - [Authentication](#authentication)
+- [API Unit Testing](#api-unit-testing)
 
 ## Installation
 
@@ -173,3 +174,11 @@ To obtain a Bearer token, the user needs to log in first.
 To log in, the user needs to head to the /user/login page and then enter the correct credentials. If successful, a token will be returned.
 
 The user the needs to pass the Bearer token as a header.
+
+## API Unit Testing
+
+To run the unit tests for the API, you can run the following command in the backend folder:
+
+```
+npm test
+```

@@ -3,7 +3,7 @@ import { CromwellAPI } from "../auth/cromwellAPI.ts";
 import { AxiosError } from "axios";
 import ResponseData from "../interfaces/ResponseData.ts";
 import { useSelector } from "react-redux";
-import RootReduxState from "../interfaces/RootState.ts";
+import RootReduxState from "../interfaces/RootReduxState.ts";
 
 interface User {
   _id: string;

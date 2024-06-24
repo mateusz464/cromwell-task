@@ -12,12 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useSelector } from "react-redux";
-
-interface RootState {
-  user: {
-    user: string | null;
-  };
-}
+import RootReduxState from "../intefaces/RootState.ts";
 
 const pages = ["Home", "Profile"];
 const settings = ["Logout"];
@@ -29,7 +24,7 @@ function NavigationBar() {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
-  const user = useSelector((state: RootState) => state.user.user);
+  const user = useSelector((state: RootReduxState) => state.user.user);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);

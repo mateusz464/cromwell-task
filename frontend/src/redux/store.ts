@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
 type UserState = {
   user: string | null;
@@ -27,10 +29,20 @@ const userReducer = (
   }
 };
 
+// Persist the user state in local storage
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, userReducer);
+
 const store = configureStore({
   reducer: {
-    user: userReducer,
+    user: persistedReducer,
   },
 });
+
+export const persistor = persistStore(store);
 
 export default store;

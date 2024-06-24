@@ -1,9 +1,5 @@
-import React from "react";
 import NavigationBar from "../components/NavigationBar";
-
-interface NavigationPageProps {
-  children: React.ReactNode;
-}
+import NavigationPageProps from "../intefaces/NavigationPageProps.ts";
 
 // Used when a page needs a navigation bar
 // Wraps the children in a NavigationBar and a centered-content div

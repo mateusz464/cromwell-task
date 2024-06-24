@@ -3,7 +3,7 @@ import { Button, Container, Link, TextField, Typography } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { CromwellAPI } from "../auth/cromwellAPI.ts";
 import { AxiosError } from "axios";
-import ResponseData from "../intefaces/ResponseData.ts";
+import ResponseData from "../interfaces/ResponseData.ts";
 
 function Register() {
   const [name, setName] = useState("");

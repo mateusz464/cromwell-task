@@ -1,5 +1,5 @@
 import NavigationBar from "../components/NavigationBar";
-import NavigationPageProps from "../intefaces/NavigationPageProps.ts";
+import NavigationPageProps from "../interfaces/NavigationPageProps.ts";
 
 // Used when a page needs a navigation bar
 // Wraps the children in a NavigationBar and a centered-content div

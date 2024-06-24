@@ -9,6 +9,8 @@ import Login from "./sections/Login.tsx";
 import NavigationPage from "./pages/NavigationPage.tsx";
 import Home from "./sections/Home.tsx";
 import ProtectedRoute from "./routes/ProtectedRoute.ts";
+import Profile from "./sections/Profile.tsx";
+import NavigationPageNoStyling from "./pages/NavigationPageNoStyling.tsx";
 
 const darkTheme = createTheme({
   palette: {
@@ -51,9 +53,9 @@ function App() {
                 path="/profile"
                 element={
                   <ProtectedRoute>
-                    <NavigationPage>
-                      <h1>Profile</h1>
-                    </NavigationPage>
+                    <NavigationPageNoStyling>
+                      <Profile />
+                    </NavigationPageNoStyling>
                   </ProtectedRoute>
                 }
               />

@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { useDispatch, useSelector } from "react-redux";
-import RootReduxState from "../intefaces/RootState.ts";
+import RootReduxState from "../interfaces/RootState.ts";
 
 const pages = ["Home", "Profile"];
 const settings = ["Logout"];

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import RootReduxState from "../intefaces/RootState.ts";
-import NavigationPageProps from "../intefaces/NavigationPageProps.ts";
+import RootReduxState from "../interfaces/RootState.ts";
+import NavigationPageProps from "../interfaces/NavigationPageProps.ts";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 

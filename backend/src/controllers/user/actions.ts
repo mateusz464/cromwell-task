@@ -1,7 +1,11 @@
 import { Response } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { createUser, getUserByEmail } from "./queries";
+import {
+  createUser,
+  getUserByEmail,
+  getUserByEmailNoPassword,
+} from "./queries";
 import decodeJWT from "../../utils/decodeJWT";
 
 export async function createTheUser(
@@ -98,7 +102,7 @@ export async function getTheUser(token: string, res: Response) {
     return;
   }
 
-  const user = await getUserByEmail(decoded.email);
+  const user = await getUserByEmailNoPassword(decoded.email);
   if (!user) {
     if (!res.headersSent) {
       res.status(404).json({ message: "User not found" });
